@@ -9,3 +9,8 @@ touch -d "20 days ago" "/opt/logmanager/web_log_$(date -d '20 days ago' +%Y%m%d%
 touch -d "35 days ago" "/opt/logmanager/db_log_$(date -d '35 days ago' +%Y%m%d%H%M%S).log"
 touch -d "40 days ago" "/opt/logmanager/security_log_$(date -d '40 days ago' +%Y%m%d%H%M%S).log"
 
+find "/opt/logmanager" -type f -name "*.log" -mtime +7 -print0 | while IFS= read -r -d $'\0' logfile; do
+    filename=$(basename "$logfile")
+    ARCHIVE_FILENAME="$(date +%Y%m%d%H%M%S)_${filename}.tar.gz"
+    tar -czvf "/opt/archive_logs/$ARCHIVE_FILENAME" "$logfile" && rm "$logfile" 
+done
