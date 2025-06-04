@@ -8,3 +8,6 @@ echo "-------------------------------------" | tee -a "$HEALTH_LOG"
 
 echo "Load Average:" | tee -a "$HEALTH_LOG"
 uptime | awk -F'load average:' '{print $2}' | tee -a "$HEALTH_LOG"
+
+echo "Memory Availability:" | tee -a "$HEALTH_LOG"
+free -h | grep -E 'Mem:|Swap:' | tee -a "$HEALTH_LOG" 
