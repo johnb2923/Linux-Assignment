@@ -16,3 +16,10 @@ find "/opt/logmanager" -type f -name "*.log" -mtime +7 -print0 | while IFS= read
 done
 
 find "/opt/archive_logs" -type f -name "*.tar.gz" -mtime +30 -delete
+
+df -h | awk 'NR>1 {print $5, $1}' | while read -r usage mountpoint; do
+    percentage=${usage%\%}
+    if (( percentage > 80 )); then
+        echo "$(date): WARNING: Partition '$mountpoint' is at ${usage} disk usage." >> "/var/tmp/log_alerts.log"
+    fi
+done
