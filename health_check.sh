@@ -11,3 +11,6 @@ uptime | awk -F'load average:' '{print $2}' | tee -a "$HEALTH_LOG"
 
 echo "Memory Availability:" | tee -a "$HEALTH_LOG"
 free -h | grep -E 'Mem:|Swap:' | tee -a "$HEALTH_LOG" 
+
+echo "SSH Service Status (Sim):" | tee -a "$HEALTH_LOG"
+echo "SSH is running (sim)." | tee -a "$HEALTH_LOG"
