@@ -14,3 +14,5 @@ find "/opt/logmanager" -type f -name "*.log" -mtime +7 -print0 | while IFS= read
     ARCHIVE_FILENAME="$(date +%Y%m%d%H%M%S)_${filename}.tar.gz"
     tar -czvf "/opt/archive_logs/$ARCHIVE_FILENAME" "$logfile" && rm "$logfile" 
 done
+
+find "/opt/archive_logs" -type f -name "*.tar.gz" -mtime +30 -delete
